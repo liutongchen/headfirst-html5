@@ -1,31 +1,27 @@
 window.onload = function() {
-    var url = "http://gumball.wickedlysmart.com/gumball/gumball.html";
-    var request = new XMLHttpRequest();
-    request.open("GET", url);
-    //if newer browser version
-    request.onload = function() {
-        if (request.status === 200) {
-            updateSales(request.responseText);
-        }
-    };
-    //if older browser version
-    request.onreadystatechange = function() {
-        if (request.readyState === 4 && request.status === 200) {
-            updateSales(request.responseText);
+    setInterval(function() {
+        var newScriptElement = document.createElement("script");
+        newScriptElement.setAttribute("src", "http://gumball.wickedlysmart.com/?callback=updateSales");
+        newScriptElement.setAttribute("id", "jsonp");
+
+        var oldScriptElement = document.getElementById("jsonp");
+        var head = document.getElementsByTagName("head")[0];
+        if (oldScriptElement) {
+            head.replaceChild(newScriptElement, oldScriptElement);
+        } else {
+            head.appendChild(newScriptElement);
         }
     }
-    request.send(null);
+    , 3000)    
+}
 
-    function updateSales(responseText) {
+function updateSales(sales) {
         var salesDiv = document.getElementById("sales");
-        var sales = JSON.parse(responseText);
         for (var i = 0; i < sales.length; i++) {
-            var sale = salses[i];
+            var sale = sales[i];
             var div = document.createElement("div");
             div.setAttribute("class", "saleItem");
             div.innerHTML = sale.name + " sold " + sale.sales + " gumballs";
             salesDiv.appendChild(div)
         }
     }
-}
-
