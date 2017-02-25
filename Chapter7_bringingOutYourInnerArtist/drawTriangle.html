@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Draw a triangle</title>
+        <meta charset="utf-8">
+        <script>
+            window.onload = function() {
+                var canvas = document.getElementById("triCanvas");
+                var context = canvas.getContext("2d");
+                context.beginPath();
+                context.moveTo(100, 150);
+                context.lineTo(250, 75);
+                context.lineTo(125, 30);
+                context.closePath();
+                context.lineWidth = 5;
+                context.stroke();
+                context.fillStyle = "pink";
+                context.fill();
+            }
+        </script>
+    </head>
+
+    <body>
+        <canvas width="600" height="600" id="triCanvas"></canvas>
+    </body>
+</html>
