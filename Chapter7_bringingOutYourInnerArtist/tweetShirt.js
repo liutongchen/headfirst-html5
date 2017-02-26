@@ -20,6 +20,9 @@ function previewHandler() {
             drawCircle(canvas, context)
         }
     }
+
+    drawText(canvas, context);
+    drawBird(canvas, context);
 }
 
 function fillBackgroundColor(canvas, context) {
@@ -66,4 +69,63 @@ function updateTweets(tweets) {
     }
 
     tweetsSelction.selectedIndex = 0;
+}
+
+function drawText(canvas, context) {
+    //draw "I saw this tweet"
+    var selectObj = document.getElementById("foregroundColor");
+    var index = selectObj.selectedIndex;
+    var fgColor = selectObj[index].value;
+
+    context.fillStyle = fgColor;
+    context.font = "bold 1em sans-serif";
+    context.textAlign = "left";
+    context.fillText("I saw this tweet", 20, 40);
+
+    //draw "and all I got was this lousy t-shirt"
+    context.textAlign = "right";
+    context.fillText("and all I got was this lousy t-shirt", canvas.width-20, canvas.height-40);
+    
+    //draw the tweet
+    var selectTweet = document.getElementById("tweets");
+    var index = selectTweet.selectedIndex;
+    var tweet = selectTweet[index].value;
+
+    context.font ="italic 1.2em serif";
+    context.textAlign = "left";
+    if (tweet.length > 60) {
+        tweetArray = splitIntoLines(canvas, tweet);
+        for (var i = 0; i < tweetArray.length; i++) {
+            context.fillText(tweetArray[i], 30, 70+(i*25));        
+        }
+    } else {
+        context.fillText(tweet, 30, 100);
+    }
+}
+
+function drawBird(canvas, context) {
+    var twitterBird = new Image();
+    twitterBird.src = "twitterBird.png";
+    twitterBird.onload = function() {
+        context.drawImage(twitterBird, 20, 120, 70, 70);
+    }
+}
+
+function splitIntoLines(canvas, tweet) {
+    var lines;
+    var strArray = [];
+    if (tweet.length % 60 === 0) {
+        lines = tweet.length / 60;
+        console.log("first")//test
+    } else {
+        lines = Math.floor(tweet.length / 60) + 1;
+        console.log(lines);//test
+    }
+    while (lines > 0) {
+        strArray.push(tweet.substring((lines-1)*60, lines*60))
+        lines--;
+        console.log(strArray) //test
+    }
+    tweetArray = strArray.reverse();
+    return tweetArray
 }
