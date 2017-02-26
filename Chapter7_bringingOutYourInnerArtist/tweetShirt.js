@@ -15,13 +15,17 @@ function previewHandler() {
         for (var square = 0; square < 20; square++) {
             drawSquare(canvas, context);
         }
+    } else if (shape === "circles") {
+        for (var circle = 0; circle < 20; circle++) {
+            drawCircle(canvas, context)
+        }
     }
 }
 
 function fillBackgroundColor(canvas, context) {
     var selectObj = document.getElementById("backgroundColor");
     var index = selectObj.selectedIndex;
-    var backgroundColor = selectObj[index].value; //omit options here
+    var backgroundColor = selectObj[index].value;
     context.fillStyle = backgroundColor;
     context.fillRect(0, 0, canvas.width, canvas.height)
 }
@@ -32,4 +36,34 @@ function drawSquare(canvas, context) {
     var y = Math.floor(Math.random() * canvas.height);
     context.fillStyle = "lightblue";
     context.fillRect(x, y, w, w);
+}
+
+function drawCircle(canvas, context) {
+    var radius = Math.floor(Math.random() * 40);
+    var x = Math.floor(Math.random() * canvas.width);
+    var y = Math.floor(Math.random() * canvas.height);
+
+    context.beginPath();
+    context.arc(x, y, radius, 0, degreeToRadians(360), true);
+
+    context.fillStyle = "lightblue";
+    context.fill();
+}
+
+function degreeToRadians(degrees) {
+    return (degrees * Math.PI) / 180;
+}
+
+function updateTweets(tweets) {
+    var tweetsSelction = document.getElementById("tweets");
+
+    for (var i = 0; i < tweets.length; i++) {
+        var tweet = tweets[i];
+        var option = document.createElement("option");
+        option.text = tweet.text;
+        option.value = tweet.text.replace("\"", "'");
+        tweetsSelction.options.add(option);
+    }
+
+    tweetsSelction.selectedIndex = 0;
 }

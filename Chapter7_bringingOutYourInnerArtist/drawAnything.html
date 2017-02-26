@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Draw a triangle</title>
+        <meta charset="utf-8">
+        <script>
+            window.onload = function() {
+                var canvas = document.getElementById("triCanvas");
+                var context = canvas.getContext("2d");
+                drawTriangle(context);
+                drawSmileyFace(context);
+            }
+
+            function drawTriangle(context) {
+                context.beginPath();
+                context.moveTo(100, 150);
+                context.lineTo(250, 75);
+                context.lineTo(125, 30);
+                context.closePath();
+                context.lineWidth = 5;
+                context.stroke();
+                context.fillStyle = "pink";
+                context.fill();
+            }
+
+            function drawSmileyFace(context) {
+                context.beginPath();
+                context.arc(300, 300, 200, 0, degreeToRadians(360), true);
+                context.fillStyle = "#ffffcc";
+                context.fill();
+                context.stroke();
+
+                context.beginPath();
+                context.arc(200, 250, 25, 0, degreeToRadians(360), true);
+                context.stroke();
+
+                context.beginPath();
+                context.arc(400, 250, 25, 0, degreeToRadians(360), true);
+                context.stroke();
+
+                context.beginPath();
+                context.moveTo(300, 300);
+                context.lineTo(300, 350);
+                context.stroke();
+
+                context.beginPath();
+                context.arc(300, 350, 75, degreeToRadians(20), degreeToRadians(160), false);
+                context.stroke();
+            }
+
+            function degreeToRadians(degrees) {
+                return (degrees * Math.PI) / 180;
+            }
+        </script>
+    </head>
+
+    <body>
+        <canvas width="600" height="600" id="triCanvas"></canvas>
+    </body>
+</html>
