@@ -94,7 +94,7 @@ function drawText(canvas, context) {
     context.font ="italic 1.2em serif";
     context.textAlign = "left";
     if (tweet.length > 60) {
-        tweetArray = splitIntoLines(canvas, tweet);
+        var tweetArray = splitIntoLines(canvas, tweet);
         for (var i = 0; i < tweetArray.length; i++) {
             context.fillText(tweetArray[i], 30, 70+(i*25));        
         }
