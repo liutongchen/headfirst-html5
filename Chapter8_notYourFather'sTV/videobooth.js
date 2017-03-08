@@ -15,13 +15,13 @@ window.onload = function() {
     }
 
     pushUnpushButtons("video1", []);
-    pushUnpushButtons("video2", []);
+    pushUnpushButtons("normal", []);
 }
 
 function handleControl(e) {
     var id = e.target.getAttribute("id");
     if (id == "play") {
-        pushUnpushButtons("play," ["pause"]);
+        pushUnpushButtons("play", ["pause"]);
 
     } else if (id == "pause") {
         pushUnpushButtons("pause", ["play"]);
@@ -69,16 +69,25 @@ function pushUnpushButtons(idToPush, idArrayToUnpush) {
     if (idToPush != "") {
         var anchor = document.getElementById(idToPush);
         var theClass = anchor.getAttribute("class");
-        if (theClass.indexOf("selected") < 0) {
-            theClass = theClass + "selected";
+        if (!theClass.indexOf("selected") >= 0) {
+            theClass = theClass + " selected";
             anchor.setAttribute("class", theClass);
-            var newImage = "url(image/" + idToPush + "pressed.png)";
+            var newImage = "url(images/" + idToPush + "pressed.png)";
             anchor.style.backgroundImage = newImage;
+            console.log("bang!") //test
         }
     }
 
-    //to be continued....
-    
+    for (var i = 0; i < idArrayToUnpush.length; i++) {
+        anchor = document.getElementById(idArrayToUnpush[i]);
+        theClass = anchor.getAttribute("class");
+        if (theClass.indexOf("selected") >= 0) {
+            theClass = theClass.replace("selected", "");
+            anchor.setAttribute("class", theClass);
+            anchor.style.backgroundImage = "";
+            console.log("bang again!");
+        }
+    }
 }
 
 function isButtonPushed(id) {
